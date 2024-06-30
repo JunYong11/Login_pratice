@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM4z0UOrwpoA2bW6bMRbk7l6IIM3R4n7eR7dp8k" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+      .register-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      }
+      .input-group {
+        margin-bottom: 15px;
+      }
+      .input-group i {
+        margin-right: 10px;
+      }
+      .input-group input {
+        padding: 15px 10px;
+      }
+      .btn-custom-width {
+        width: 70%;
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="register-container">
+    <h2 class="text-center">회원가입</h2>
+    <form id="registerForm">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        <input type="text" id="name" name="name" class="form-control" placeholder="이름" required>
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+        </div>
+        <input type="text" id="username" name="username" class="form-control" placeholder="아이디" required>
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+        </div>
+        <input type="password" id="password" name="password" class="form-control" placeholder="패스워드" required>
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-phone"></i></span>
+        </div>
+        <input type="tel" id="phone" name="phone" class="form-control" placeholder="전화번호" required>
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+        </div>
+        <input type="text" id="nickname" name="nickname" class="form-control" placeholder="닉네임" required>
+      </div>
+      <button type="button" id="register" class="btn btn-primary btn-custom-width">가입</button>
+    </form>
+  </div>
+
+  <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resultModalLabel">Registration Result</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="result-message"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+        $('#register').on('click', function() {
+            var formData = {
+                name: $('#name').val(),
+                username: $('#username').val(),
+                password: $('#password').val(),
+                phone: $('#phone').val(),
+                nickname: $('#nickname').val()
+            };
+
+            $.ajax({
+                url: '/register',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    $('#result-message').text(response.message);
+                    $('#resultModal').modal('show');
+                },
+                error: function(response) {
+                    $('#result-message').text(response.responseJSON.message);
+                    $('#resultModal').modal('show');
+                }
+            });
+        });
+    });
+
+    $('#resultModal').on('hidden.bs.modal', function () {
+      window.location.href = '/login';
+    });
+  </script>
+  </body>

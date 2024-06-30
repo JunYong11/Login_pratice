@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM4z0UOrwpoA2bW6bMRbk7l6IIM3R4n7eR7dp8k" crossorigin="anonymous">
+  </head>
+  <body>
+  <div class="login-container">
+    <h2>{{title}}</h2>
+    <form action="{{action}}" method="POST">
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="username" name="username" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="register-link">
+      <p>Don't have an account? <a href="/register">Sign up</a></p>
+    </div>
+  </div>
+  </body>
+</html>
