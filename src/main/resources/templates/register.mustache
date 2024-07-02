@@ -93,6 +93,17 @@
   <script>
     $(document).ready(function() {
         $('#register').on('click', function() {
+            var name = $('#name').val().trim();
+            var username = $('#username').val().trim();
+            var password = $('#password').val().trim();
+            var phone = $('#phone').val().trim();
+            var nickname = $('#nickname').val().trim();
+
+            if (name === '' || username === '' || password === '' || phone === '' || nickname === '') {
+            $('#result-message').text('모든 필드를 채워주세요.');
+            $('#resultModal').modal('show');
+            return; // Exit function if any field is empty
+        }
             var formData = {
                 name: $('#name').val(),
                 username: $('#username').val(),
@@ -109,17 +120,19 @@
                 success: function(response) {
                     $('#result-message').text(response.message);
                     $('#resultModal').modal('show');
+                    $('#resultModal').on('hidden.bs.modal', function () {
+                        window.location.href = '/login';
+                    });
                 },
                 error: function(response) {
                     $('#result-message').text(response.responseJSON.message);
                     $('#resultModal').modal('show');
+                    $('#resultModal').on('hidden.bs.modal', function () {
+                        window.location.href = '/register';
+                    });
                 }
             });
         });
-    });
-
-    $('#resultModal').on('hidden.bs.modal', function () {
-      window.location.href = '/login';
     });
   </script>
   </body>
